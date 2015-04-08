@@ -23,7 +23,7 @@ CROSS =
 
 # The flags for the yaboot binary.
 #
-YBCFLAGS = -Os
+YBCFLAGS = -O2
 YBCFLAGS += -g
 ifneq ($(CFLAGS),)
 YBCFLAGS += $(CFLAGS)
@@ -178,7 +178,7 @@ second/yaboot.a: $(OBJS)
 	mv -f $@.~ $@
 
 second/yaboot: $(OBJS) util/addnote ld.script second/yaboot.a second/empty.o
-	$(LD) -T ld.script $(LFLAGS) second/empty.o second/crt0.o second/yaboot.a -o $@
+	$(LD) -T ld.script $(LFLAGS) second/empty.o second/crt0.o second/yaboot.a -o $@ `gcc -m32 -print-libgcc-file-name`
 	chmod -x $@
 	cp $@ $@.chrp
 	util/addnote $@.chrp
